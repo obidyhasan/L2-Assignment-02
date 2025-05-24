@@ -74,3 +74,23 @@ ORDER BY sighting_time DESC FETCH FIRST 2 ROWS ONLY;
 -- Problem 7.
 UPDATE species SET conservation_status = 'Historic' 
 WHERE EXTRACT(YEAR FROM discovery_date) < 1800;
+
+-- Problem 8.
+CREATE OR REPLACE FUNCTION get_time_label(p_time FLOAT)
+RETURNS TEXT
+LANGUAGE PLPGSQL AS
+$$
+BEGIN
+    IF(p_time < 12) THEN
+        RETURN 'Morning';
+    ELSEIF (p_time < 17) THEN
+        RETURN 'Afternoon';
+    ELSE 
+        RETURN 'Evening';
+    END IF;
+END
+$$;
+
+SELECT sighting_id, 
+get_time_label(EXTRACT(HOUR FROM sighting_time)) AS time_of_day 
+FROM sightings;
