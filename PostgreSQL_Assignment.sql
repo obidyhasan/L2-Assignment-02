@@ -64,3 +64,9 @@ JOIN sightings USING(ranger_id) GROUP BY ranger_id;
 SELECT common_name FROM species WHERE species_id NOT IN (
     SELECT species_id FROM sightings
 );
+
+-- Problem 6.
+SELECT common_name, sighting_time, name FROM sightings
+JOIN species USING(species_id)
+JOIN rangers USING(ranger_id)
+ORDER BY sighting_time DESC FETCH FIRST 2 ROWS ONLY;
