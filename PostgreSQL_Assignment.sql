@@ -21,8 +21,8 @@ CREATE TABLE sightings (
     sighting_id SERIAL PRIMARY KEY,
     ranger_id INTEGER REFERENCES rangers(ranger_id) ON DELETE CASCADE,
     species_id INTEGER REFERENCES species(species_id) ON DELETE CASCADE,
-    sighting_time TIMESTAMP NOT NULL,
     location TEXT NOT NULL,
+    sighting_time TIMESTAMP NOT NULL,
     notes TEXT
 );
 
@@ -55,3 +55,7 @@ SELECT count(DISTINCT species_id) as unique_species_count FROM sightings;
 
 -- Problem 3.
 SELECT * FROM sightings WHERE location ILIKE '%Pass%';
+
+-- Problem 4.
+SELECT name, count(*) AS total_sightings FROM rangers 
+JOIN sightings USING(ranger_id) GROUP BY ranger_id;
