@@ -70,3 +70,7 @@ SELECT common_name, sighting_time, name FROM sightings
 JOIN species USING(species_id)
 JOIN rangers USING(ranger_id)
 ORDER BY sighting_time DESC FETCH FIRST 2 ROWS ONLY;
+
+-- Problem 7.
+UPDATE species SET conservation_status = 'Historic' 
+WHERE EXTRACT(YEAR FROM discovery_date) < 1800;
